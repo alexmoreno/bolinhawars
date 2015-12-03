@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+	<head>
+    	<meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Bolinha WARS!</title>
+        <meta name="description" content="Comande a bolinha em sua guerra incessante contra todas bolinhas coloridas inimigas!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+		<link rel="stylesheet" href="./assets/css/style.css">
+		<meta property="og:image" content="http://tatudobem.blog.br/bolinhawars/assets/img/bolinhawars.png">
+	</head>
+	<body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+		<header>
+			<div class="left"><div class="branding">Bolinha WARS! &nbsp;&nbsp;</div>  </div>
+			<div class="right"><span id='achievements-button'>Conquistas</span></div> <div class="fb-share-button" data-href="http://tatudobem.blog.br/bolinhawars/" data-layout="button_count"></div>
+			<div class="achievements-panel">
+				Conquistas: 
+				<ul class='achievement-list'>
+					<li class='achievement-description'>Consiga 100 pontos em uma partida
+						<ul class='achievement-info'>
+								<li class='achievement-score'><span id='60maxScore-progress'>0</span> / 100</li>
+						</ul>
+					</li>
+					<li class='achievement-description'>Coma 1.000 bolinhas ao total
+						<ul class='achievement-info'>
+								<li class='achievement-score'><span id='1000score-progress'>0</span> / 1.000</li>
+						</ul>
+					</li>
+					<li class='achievement-description'>Coma 100.000 bolinhas ao total
+						<ul class='achievement-info'>
+								<li class='achievement-score'><span id='100000score-progress'>0</span> / 100.000</li>
+						</ul>
+					</li>
+					<li class='achievement-description'>Morra 200 vezes com mais de 10 pontos
+						<ul class='achievement-info'>
+								<li class='achievement-score'><span id='200deaths-progress'>0</span> / 200</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="hud">
+			Pontos: <span id='score'>0</span> &nbsp;&nbsp;&nbsp;&nbsp;
+			Bombas: <span id='bombs'>0</span>
+			<div class="right">
+				Melhor Pontuacao: <span id='max-score'>0</span>
+			</div>
+		</div>
+		<div id="start">
+			<span id='start-button'>Clique para comecar	</span>
+			<div class="how-to-play">Coma bolinhas menores, esquive das maiores, <br>aperte B para soltar bomba.</div>
+
+		</div>
+		<canvas id='canvas' width='100%' height='100%'></canvas>
+		<footer>
+			Desenvolvido por <a href="http://fb.com/alexmorenodev" target='_blank'>Alex Moreno</a> - <a href="">github</a> - <a href="./changelog.txt">changelog</a> - Versão 	0.5
+			<div class="right">
+				<script language="JavaScript">var fhs = document.createElement('script');var fhs_id = "5152820";
+					var ref = (''+document.referrer+'');var pn =  window.location;var w_h = window.screen.width + " x " + window.screen.height;
+					fhs.src = "http://freehostedscripts.net/ocounter.php?site="+fhs_id+"&e1=Online User&e2=Online Users&r="+ref+"&wh="+w_h+"&a=1&pn="+pn+"";
+					document.head.appendChild(fhs);document.write("<span id='o_"+fhs_id+"'></span>");
+				</script>
+			</div>
+
+		</footer>
+
+		<script src='http://code.jquery.com/jquery-latest.min.js'></script>
+		<script src='./assets/js/game.js?124'></script>
+		<script>
+			jQuery(document).ready(function(){
+				$('#achievements-button').on('click', function(){
+					$('.achievements-panel').slideToggle('slow')
+				})
+			})
+		</script>
+	</body>
+</html>
