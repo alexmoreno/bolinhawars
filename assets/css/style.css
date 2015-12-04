@@ -47,10 +47,24 @@ table {
 	border-spacing: 0;
 }
 
+
+
+
+@font-face {
+  font-family: 'lunchTime';
+  src: url('../fonts/lunchds.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/lunchds.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/lunchds.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/lunchds.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/lunchds.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/lunchds.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: 'lunchTime';
 }
 canvas {
   background-color: white;
@@ -78,7 +92,7 @@ footer{
 }
 
 .branding{
-	font-size: 16px;
+	font-size: 28px;
 	font-weight: bold;
 	
 }

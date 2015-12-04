@@ -47,13 +47,19 @@
 								<li class='achievement-score'><span id='200deaths-progress'>0</span> / 200</li>
 						</ul>
 					</li>
+					<li class='achievement-description'>Matar o primeiro b0ss
+						<ul class='achievement-info'>
+								<li class='achievement-score'><span id='killFirstBoss-progress'>0</span> / 1</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</header>
 
 		<div class="hud">
 			Pontos: <span id='score'>0</span> &nbsp;&nbsp;&nbsp;&nbsp;
-			Bombas: <span id='bombs'>0</span>
+			Bombas: <span id='bombs'>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
+			Vida do b0ss: <span id='boss-life'>0</span>
 			<div class="right">
 				Melhor Pontuacao: <span id='max-score'>0</span>
 			</div>
@@ -65,7 +71,7 @@
 		</div>
 		<canvas id='canvas' width='100%' height='100%'></canvas>
 		<footer>
-			Desenvolvido por <a href="http://fb.com/alexmorenodev" target='_blank'>Alex Moreno</a> - <a href="">github</a> - <a href="./changelog.txt">changelog</a> - Versão 	0.5
+			Desenvolvido por <a href="http://fb.com/alexmorenodev" target='_blank'>Alex Moreno</a> - <a href="https://github.com/alexmoreno/bolinhawars">github</a> - <a href="./changelog.txt">changelog</a> - Versao 	0.5
 			<div class="right">
 				<script language="JavaScript">var fhs = document.createElement('script');var fhs_id = "5152820";
 					var ref = (''+document.referrer+'');var pn =  window.location;var w_h = window.screen.width + " x " + window.screen.height;
