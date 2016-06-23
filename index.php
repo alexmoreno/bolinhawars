@@ -6,7 +6,6 @@
         <title>Bolinha WARS!</title>
         <meta name="description" content="Comande a bolinha em sua guerra incessante contra todas bolinhas coloridas inimigas!">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 		<link rel="stylesheet" href="./assets/css/style.css">
@@ -27,58 +26,67 @@
 			<div class="achievements-panel">
 				Conquistas: 
 				<ul class='achievement-list'>
-					<li class='achievement-description'>Consiga 100 pontos em uma partida
+					<li class='achievement-description'>Consiga 40 pontos em uma partida
 						<ul class='achievement-info'>
-								<li class='achievement-score'><span id='60maxScore-progress'>0</span> / 100</li>
+								<li class='achievement-score'><span id='40maxScore-progress'>0</span> / 40 <div class="achievement-bar"></div></li>
+
 						</ul>
 					</li>
 					<li class='achievement-description'>Coma 1.000 bolinhas ao total
 						<ul class='achievement-info'>
-								<li class='achievement-score'><span id='1000score-progress'>0</span> / 1.000</li>
+								<li class='achievement-score'><span id='1000score-progress'>0</span> / 1.000 <div class="achievement-bar"></div></li>
+
 						</ul>
 					</li>
 					<li class='achievement-description'>Coma 100.000 bolinhas ao total
 						<ul class='achievement-info'>
-								<li class='achievement-score'><span id='100000score-progress'>0</span> / 100.000</li>
+								<li class='achievement-score'><span id='100000score-progress'>0</span> / 100.000 <div class="achievement-bar"></div></li>
+
 						</ul>
 					</li>
 					<li class='achievement-description'>Morra 200 vezes com mais de 10 pontos
 						<ul class='achievement-info'>
-								<li class='achievement-score'><span id='200deaths-progress'>0</span> / 200</li>
+								<li class='achievement-score'><span id='200deaths-progress'>0</span> / 200 <div class="achievement-bar"></div></li>
+
 						</ul>
 					</li>
 					<li class='achievement-description'>Matar o primeiro b0ss
 						<ul class='achievement-info'>
-								<li class='achievement-score'><span id='killFirstBoss-progress'>0</span> / 1</li>
+								<li class='achievement-score'><span id='killFirstBoss-progress'>0</span> / 1 <div class="achievement-bar"></div></li>
+
 						</ul>
 					</li>
 				</ul>
 			</div>
 		</header>
-
-		<div class="hud">
-			Pontos: <span id='score'>0</span> &nbsp;&nbsp;&nbsp;&nbsp;
-			Bombas: <span id='bombs'>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			Vida do b0ss: <span id='boss-life'>0</span>
-			<div class="right">
-				Melhor Pontuacao: <span id='max-score'>0</span>
+		<div class="wrapper game-bg">
+			<div class="content">
+				<div class="hud">
+							Pontos: <span id='score'>0</span> &nbsp;&nbsp;&nbsp;&nbsp;
+							Bombas: <span id='bombs'>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							Vida do b0ss: <span id='boss-life'>0</span>
+							<div class="right">
+								Melhor Pontuacao: <span id='max-score'>0</span>
+							</div>
+						</div>
+						<div id="start">
+							<span id='you-died'>Morreu :( <br>E fez <span id='you-died-score'></span> <span id="you-died-pontos-word"></span>, tente de novo!</span>
+							<span id='start-button'>Clique para comecar	</span>
+							<div class="how-to-play">Coma bolinhas menores, esquive das maiores, <br>aperte B para soltar bomba.</div>
+				
+						</div>
+				<canvas id='canvas' width='100%' height='100%'></canvas>
 			</div>
 		</div>
-		<div id="start">
-			<span id='start-button'>Clique para comecar	</span>
-			<div class="how-to-play">Coma bolinhas menores, esquive das maiores, <br>aperte B para soltar bomba.</div>
-
-		</div>
-		<canvas id='canvas' width='100%' height='100%'></canvas>
 		<footer>
-			Desenvolvido por <a href="http://fb.com/alexmorenodev" target='_blank'>Alex Moreno</a> - <a href="https://github.com/alexmoreno/bolinhawars">github</a> - <a href="./changelog.txt">changelog</a> - Versao 	0.5
-			<div class="right">
+			Desenvolvido por <a href="http://fb.com/alexmorenodev" target='_blank'>Alex Moreno</a> - <a href="https://github.com/alexmoreno/bolinhawars">github</a> - <a href="./changelog.txt">changelog</a> - Versao 	0.9 - 
+			
 				<script language="JavaScript">var fhs = document.createElement('script');var fhs_id = "5152820";
 					var ref = (''+document.referrer+'');var pn =  window.location;var w_h = window.screen.width + " x " + window.screen.height;
 					fhs.src = "http://freehostedscripts.net/ocounter.php?site="+fhs_id+"&e1=Online User&e2=Online Users&r="+ref+"&wh="+w_h+"&a=1&pn="+pn+"";
 					document.head.appendChild(fhs);document.write("<span id='o_"+fhs_id+"'></span>");
 				</script>
-			</div>
+			
 
 		</footer>
 

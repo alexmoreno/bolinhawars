@@ -31,13 +31,16 @@ var lS = localStorage;
 		radius: 10,
 		bombs: 0,
 		bombsEnabled : false,
-		maxBombs : 0
+		maxBombs : 0,
+		bombsMod: false,
+		score: 0
 	},	
 	circleRadius : 10,
 	maxCircleRadiusInterval: 10,
 	maxCircles: 45,
 	maxScore: 0,
 	totalEaten: 0,
+	spawnCirclesCounter: 0,
 	circles : [],
 	colors: ['Blue', 'DeepSkyBlue', 'MediumSlateBlue', 'Aquamarine', 'Lime', 'Indigo', 'Red', 'DarkRed', 'Fuchsia', 'Magenta', 'Orange', 'OrangeRed', 'GreenYellow', 'Purple'],
 
@@ -46,25 +49,33 @@ var lS = localStorage;
 		J.startx   = 100,
 		J.starty  = 100,
 		J.circleRadius =  10
-		
+		J.deleteAll()
+
+
 		J.Player.x = J.canvasWidth/2
 		J.Player.y = J.canvasHeight/2
 		J.Player.rx = J.canvasWidth/2
 		J.Player.ry = J.canvasHeight/2
 		J.Player.radius = 10
+		J.Player.score = 0
 		J.Player.bombsEnabled = true,
 		J.Player.maxBombs = 1
 		J.Player.bombs = 1
-		J.setBombs(J.Player.maxBombs)
-			
+		// if any achievement enabled
+		if (J.Player.bombsMod) {
+			J.Player.maxBombs = J.Player.bombsMod
+			J.Player.bombs = J.Player.bombsMod
+		}
 		
+			
+		J.setBombs(J.Player.maxBombs)
 	},
 
 	init: function(restart){
 		J.canvas = document.getElementById('canvas');
 		J.ctx = J.canvas.getContext('2d')
-		J.canvasWidth = window.innerWidth
-       	J.canvasHeight = window.innerHeight - 80
+		J.canvasWidth = 800
+       	J.canvasHeight = 576
 
        	J.setScore(0)
        	J.setMaxScore(lS.getItem('maxScore') | 0);
@@ -76,15 +87,63 @@ var lS = localStorage;
 		J.checkAchievements();
 		
       	if(restart){
-			J.start()
+      		$('#start').show()
       	}
 		$('#start-button').unbind('click').bind('click', function(){
-			J.start()
+			J.canvasWrite('Fase 1', J.start)
+			
 		})
 		$('#boss-life').html(0)
 
 		
 	},
+
+
+	canvasWrite: (text, cb) => {
+		J.deleteItem(J.Player.rx, J.Player.ry, J.Player.radius)
+		$(J.canvas).unbind('mousemove').css('cursor', 'default')
+		J.ctx.fillStyle = "#fff";
+		J.ctx.textBaseLine = 'middle';
+		J.ctx.textAlign = 'center';
+
+		if (text == 'Fase 1') {
+			
+			
+			J.ctx.font = "bold 24px lunchTime";
+			J.ctx.fillText(text, 400, 300);
+		}
+
+		if (text == 'boss1') {
+			
+			J.ctx.font = "bold 24px lunchTime";
+			J.ctx.fillText('Chefe!', 400, 300);
+			
+			J.ctx.font = "bold 18px lunchTime";
+			J.ctx.fillText('Esquive-se dos tiros por 30 segundos!', 400, 340);
+			
+		}
+
+		if (text == 'zerou') {
+			J.ctx.font = "bold 24px lunchTime";
+			J.ctx.fillText('PARABENS!', 400, 300);
+
+			J.ctx.font = "bold 18px lunchTime";
+			J.ctx.fillText('Aguarde novas atualizações!', 400, 340);
+			
+		}
+
+		  $('#start').css('display', 'none')
+		  setTimeout(() => {
+
+			  J.ctx.fillStyle = "#000";
+			  J.ctx.font = "bold 24px lunchTime";
+			  J.ctx.clearRect(200, 200, 400, 300);
+			  $(J.canvas).mousemove(J.mouseMove).css('cursor', 'none')
+		  		cb()
+		  }, 3000);
+
+	},
+
 	deleteItem: function(x, y, radius){
 		J.ctx.beginPath();
 		J.ctx.arc(x,y,radius+1,0,Math.PI*2,false)
@@ -112,6 +171,7 @@ var lS = localStorage;
 	
 
 	start: function(){
+
 		J.resetStartValues();
 		J.interval = setInterval(J.tick, J.fps);
 		J.spawnCircles()
@@ -120,13 +180,19 @@ var lS = localStorage;
 		$(document).bind('touchmove', J.touchMove)
 		$(document).bind('keypress', J.keyPress)
 
-		$('#start').css('display', 'none')
 	},
 
 	spawnCircles: function(){
-		for(var i = 0; i < J.maxCircles; i++ ){
-			J.circles[i] = J.createCircle()
-		}
+		
+		setTimeout(function(){
+			J.circles[J.spawnCirclesCounter] = J.createCircle()
+			J.spawnCirclesCounter++
+			if(J.spawnCirclesCounter <= J.maxCircles){
+				J.spawnCircles()
+			}
+			else J.spawnCirclesCounter = 0;
+		}, 60)
+
 	},
 
 	spawnBoss: function(){
@@ -142,8 +208,12 @@ var lS = localStorage;
 		bossLife = 30;
 		$('#boss-life').html(bossLife).show()
 		setTimeout(function(){
-			bossCounter = setInterval(timer, 1000);
+			bossCounter = setInterval(function(){
+				timer
+				J.setScore(++J.Player.score)
+			}, 1000);
 			J.Boss.shoot()
+			
 			J.BossLiveInterval = setTimeout(J.Boss.die, bossLife*1000);
 		}, 3000) 
 		
@@ -172,7 +242,8 @@ var lS = localStorage;
 				J.BossKilled = 1;
 				lS.setItem('BossKilled', 1);
 				clearInterval(bossCounter)
-				alert('Zerou a primeira fase! Aguarde por updates. =)')
+				J.canvasWrite('zerou', function(){zerou = 0})
+
 				
 	
 			},
@@ -289,7 +360,7 @@ var lS = localStorage;
 	createCircle: function(){
 
 		circle = {
-			radius: rand(J.circleRadius-J.maxCircleRadiusInterval, J.circleRadius+J.maxCircleRadiusInterval+15),
+			radius: rand(J.circleRadius-J.maxCircleRadiusInterval, J.circleRadius+J.maxCircleRadiusInterval+7),
 			color: J.colors[rand(0,J.colors.length-1)],
 		
        		move: function(){
@@ -350,10 +421,22 @@ var lS = localStorage;
 		return circle;
 	},
 	mouseMove: function(e) {
+		var mouseX, mouseY;
+
+	    if(e.offsetX) {
+	        mouseX = e.offsetX;
+	        mouseY = e.offsetY;
+	    }
+	    else if(e.layerX) {
+	        mouseX = e.layerX;
+	        mouseY = e.layerY;
+	    }
+
+
 		J.Player.rx = J.Player.x,
 		J.Player.ry = J.Player.y
-	    J.Player.x = e.clientX 
-	    J.Player.y = e.clientY -40
+	    J.Player.x = mouseX 
+	    J.Player.y = mouseY 
 	    J.deleteItem(J.Player.rx, J.Player.ry, J.Player.radius)
 		J.draw(J.Player.x, J.Player.y, J.Player.radius, "#fff");
     },
@@ -414,21 +497,28 @@ var lS = localStorage;
 		J.circleRadius = J.circleRadius + 1;
 		J.circles.push(J.createCircle());
 		J.Player.radius = J.Player.radius+1;
-   		J.Player.score = J.Player.radius - 10
+   		J.Player.score++
 		J.setScore(J.Player.score)
-		if((J.Player.score) == 50){
+		if((J.Player.score) == 20){
 			J.deleteAll();
-			J.spawnBoss();
+			J.deleteItem(J.Player.rx, J.Player.ry, J.Player.radius)
+
+			J.canvasWrite('boss1', J.spawnBoss)
 		}
    	},
    	death: function(){
-   		score = J.Player.radius-10
+   		score = J.Player.score
 		if (score > 10) { 
 			deathsAbove10 = lS.getItem('deathsAbove10');
 			lS.setItem('deathsAbove10', ++deathsAbove10)
 		 }
-		J.deleteAll();
-		
+
+		//J.deleteAll();
+		$(J.canvas).unbind('mousemove').css('cursor', 'default')
+		wordPontos = (score > 1) ? 'pontos' : 'ponto'
+		$('#you-died-score').html(score)
+		$('#you-died-pontos-word').html(wordPontos)
+		$('#you-died').show()
 		clearInterval(J.interval)
 		clearInterval(J.bossInterval)
 		clearInterval(J.BossLiveInterval)
@@ -461,34 +551,74 @@ var lS = localStorage;
 		}
 	},
 	setAchievements: function(){
-		$('#60maxScore-progress').html(J.maxScore)
-		$('#1000score-progress').html(J.totalEaten)
-		$('#100000score-progress').html(J.totalEaten)
-		$('#200deaths-progress').html(J.deathsAbove10)
-		$('#killFirstBoss-progress').html(J.BossKilled)
+		
+
+		
+
 	},
+
+	calcAchievements : (index) => {
+		console.log(J.Achievements[index]);
+		$(index).html(J.Achievements[index].progress)
+		var color = (J.Achievements[index].progress >= J.Achievements[index].goal) ? 'green' : 'red'
+		var width = (J.Achievements[index].progress >= J.Achievements[index].goal) ? '100'  : J.Achievements[index].progress / J.Achievements[index].goal * 100
+		$(index).next().css({backgroundColor: color, width: width +'%'})
+		if ( J.Achievements[index].progress >= J.Achievements[index].goal) { J.Achievements[index].prize()}
+	},
+	
 
 	checkAchievements: function(){
-
-		J.setAchievements();
-
-
-		//maxScoreProgress
-		//if (lS.getItem('totalEaten') > 1000) {
-			J.Achievements['1000score'].prize();
-		//}
-	},
-
-	Achievements: 	{
-		'1000score': {
-			prize: function(){
-				J.Player.bombsEnabled = true,
-				J.Player.maxBombs = 3
-				J.Player.bombs = 3
-			}
-			
+		J.generateAchievements()
+		for(var a in J.Achievements){
+			J.calcAchievements(a)
 		}
 	},
+
+	generateAchievements: () =>{
+		J.Achievements = {
+			'#100000score-progress' : {
+				progress: J.totalEaten,
+				goal: 100000
+			},
+
+			'#1000score-progress' : {
+				progress: J.totalEaten,
+				goal: 1000,
+				prize: () => {
+					J.Player.bombsEnabled = true,
+					J.Player.maxBombs = 3
+					J.Player.bombs = 3,
+					J.Player.bombsMod = 3
+				}
+			},
+
+			'#40maxScore-progress' : {
+				progress: J.maxScore,
+				goal: 40,
+				prize: () => {
+					J.Player.bombsEnabled = true,
+					J.Player.maxBombs = 3
+					J.Player.bombs = 3,
+					J.Player.bombsMod = 3
+				}
+			},	
+
+			'#killFirstBoss-progress' : {
+				progress: J.BossKilled,
+				goal: 1,
+				prize: () => {
+					
+				}
+			},
+
+			'#200deaths-progress' : {
+				progress: J.deathsAbove10,
+				goal: 200
+			}
+		}
+	},
+
+	Achievements: 	{},
 }
   
 J.init(false);

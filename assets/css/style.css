@@ -70,6 +70,8 @@ canvas {
   background-color: white;
   border:1px solid black;
   background-color: #000;
+  margin:0 auto;
+  margin-top: 22px;
 }
 header{
 	position: relative;
@@ -80,15 +82,22 @@ header{
 	
 }
 footer{
+	float: left;
+    background-color: #272727;
+    position: relative;
+    height: 30px;
+    width: 98%;
+    
+    padding: 0 1%;
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 10px;
+    color: white;
 
-	position: relative;
-	height: 20px;
-	width: 98%;
-	padding: 0 1%;
-	
-	text-align: center;
-	margin-top: 10px;
-
+}
+footer a, footer a:visited{
+	color: white;
+	text-decoration: underline;
 }
 
 .branding{
@@ -107,10 +116,13 @@ footer{
 .hud{
 	position: absolute;
 	top: 50px;
-	width: 98%;
-	padding: 0 1%;
+	width: 780px;
+	padding: 0 10px;
+	padding-bottom: 3px;
 	color: white;
-	font-size: 22px;
+	background-color: #000;
+	border-bottom: 1px solid #ccc;
+	font-size: 18px;
 }
 
 #start{
@@ -119,12 +131,12 @@ footer{
 	color: white;
 	font-size: 24px;
 	
-	width: 100%;
+	width: 800px;
 	text-align: center;
 	
 	
 }
-#start span{
+#start-button{
     padding: 20px;
     /* margin: 0 auto; */
     /* position: relative; */
@@ -133,6 +145,16 @@ footer{
     /* float: left; */
     /* margin: 0 auto; */
     border: 3px solid white;
+}
+
+#you-died{
+	width: 600px;
+	left: 100px;
+	display: inline-block;
+	font-size: 40px;
+	margin-top: -200px;
+	position: absolute;
+	display: none;
 }
 .how-to-play{
 	
@@ -158,7 +180,7 @@ footer{
 }
 
 .achievement-description{
-	border: 1px solid #000;
+	
 	width: 100%;
 	text-align: center;
 	margin: 0 auto;
@@ -169,7 +191,7 @@ footer{
 
 .achievement-info{
 	list-style: none;
-	margin-left: -40px;
+	
 }
 
 .achievements-score{
@@ -186,5 +208,34 @@ footer{
 }
 
 .achievement-score{
+	
+	
+	padding: 5px;
+	color: black;
 
+}
+.achievement-bar{
+	width: 50%;
+	height: 3px;
+	background-color: red;
+
+}
+
+
+
+
+.content{
+	
+	margin: 0 auto;
+	width: 800px;
+	height: 600px;
+}
+
+.wrapper{
+	width: 100%;
+	float: left;
+	
+}
+.game-bg{
+	background-color: #181818;
 }
